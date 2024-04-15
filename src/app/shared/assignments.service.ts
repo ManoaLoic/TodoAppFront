@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Assignment } from '../assignments/assignment.model';
+import { Assignment, Auteur } from '../assignments/assignment.model';
 import { Observable, forkJoin, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { LoggingService } from './logging.service';
@@ -7,6 +7,9 @@ import { HttpClient } from '@angular/common/http';
 
 // importation des données de test
 import { bdInitialAssignments } from './data';
+import { API_ENDPOINT } from './constants';
+import { User } from '../users/user.model';
+import { Matiere } from '../matieres/matiere.model';
 
 @Injectable({
     providedIn: 'root'
@@ -17,8 +20,7 @@ export class AssignmentsService {
     constructor(private logService: LoggingService,
         private http: HttpClient) { }
 
-    uri = 'http://localhost:8010/api/assignments';
-    // uri = "https://angularmbdsmadagascar2024.onrender.com/api/assignments";
+    uri = `${API_ENDPOINT}/assignments`;
 
     // retourne tous les assignments
     getAssignments(): Observable<Assignment[]> {
@@ -105,7 +107,7 @@ export class AssignmentsService {
         });
     }
 
-    peuplerBDavecForkJoin(): Observable<any> {
+    peuplerBDavecForkJoin(users: User[], matieres: Matiere[]): Observable<any> {
         let appelsVersAddAssignment: Observable<any>[] = [];
 
         bdInitialAssignments.forEach(a => {
@@ -113,8 +115,30 @@ export class AssignmentsService {
             nouvelAssignment.nom = a.nom;
             nouvelAssignment.dateDeRendu = new Date(a.dateDeRendu);
             nouvelAssignment.rendu = a.rendu;
+            nouvelAssignment.note = a.note || undefined;
+            nouvelAssignment.remarque = a.remarque || '';
+            if(users[a.auteurId]){
+                const user = users[a.auteurId];
+                const auteur = new Auteur();
+                auteur._id = user._id;
+                auteur.nom = user.nom;
+                auteur.image = user.image;
 
-            appelsVersAddAssignment.push(this.addAssignment(nouvelAssignment))
+                nouvelAssignment.auteur = auteur;
+            }
+            if(matieres[a.matiereId]){
+                const matiereInput = matieres[a.matiereId];
+                const matiere = new Matiere();
+                matiere._id = matiereInput._id;
+                matiere.image = matiereInput.image;
+                matiere.nom = matiereInput.nom;
+                matiere.nom_prof = matiereInput.nom_prof;
+                matiere.prof_img = matiereInput.prof_img;
+
+                nouvelAssignment.matiere = matiere;
+            }
+
+            appelsVersAddAssignment.push(this.addAssignment(nouvelAssignment));
         });
 
         return forkJoin(appelsVersAddAssignment);
