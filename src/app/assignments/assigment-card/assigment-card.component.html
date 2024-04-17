@@ -1,0 +1,49 @@
+<mat-card class="item">
+    <mat-card-header>
+        <div class="header-box">
+            <div class="left">
+                <div class="center">
+                    <div class="avatar m-small-right">
+                        <img class="avatar-img-box-img" src="{{assignment.auteur.image}}" />
+                    </div>
+                    {{assignment.auteur.nom}}
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="header-right-content">
+                    <p>Limite:</p>
+                    <p>{{ assignment.dateDeRendu | date : "dd/MM/yy" }}</p>
+                </div>
+            </div>
+        </div>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="m-xx-large-left">
+            <div class="box-content-item center">
+                <span class="m-small-right">Matière:</span>
+                <div class="box-matiere center">
+                    <div class="center avatar m-small-right">
+                        <img class="avatar-img-box-img m-small-right" src="{{assignment.matiere.image}}" />
+                    </div>
+                    <span>{{assignment.matiere.nom}}</span>
+                </div>
+            </div>
+            <div class="box-content-item center">
+                {{assignment.nom}}
+            </div>
+            <div class="box-content-item center">
+                <span class="m-small-right">Rendu: </span>
+                @if(assignment.rendu){
+                <mat-icon style="color: green;">done_outline</mat-icon>
+                }@else{
+                <mat-icon style="color: red;">schedule</mat-icon>
+                }
+            </div>
+        </div>
+    </mat-card-content>
+    <mat-card-actions>
+        <div class="card-footer">
+            <a mat-stroked-button routerLink="/assignment/{{ assignment._id }}">Voir détail</a>
+        </div>
+    </mat-card-actions>
+</mat-card>

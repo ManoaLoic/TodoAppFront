@@ -8,3 +8,17 @@ body {
     margin: 0;
     padding: 0;
 }
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.m-small-right {
+    margin-right: 8px;
+}
+
+.m-xx-large-left {
+    margin-left: 60px;
+}
