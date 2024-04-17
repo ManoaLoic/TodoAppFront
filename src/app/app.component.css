@@ -65,6 +65,7 @@
     height: 50px;
     padding: 5px;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 .avatar-img-box-img {

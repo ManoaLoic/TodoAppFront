@@ -1,43 +1,73 @@
-table, tr, td {
-  border: 1px solid black;
-  border-collapse: collapse;
-  padding: 20px;
+table,
+tr,
+td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 20px;
 }
 
 .rendu {
-  color:green;
+    color: green;
 }
 
 .nonRendu {
-  color:red;
-  background-color: yellow;
-  border:2px dashed purple;
-  padding:5px;
+    color: red;
+    background-color: yellow;
+    border: 2px dashed purple;
+    padding: 5px;
 }
 
 .container {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .btnAjout {
-  align-self: flex-end;
+    align-self: flex-end;
 }
 
 .demo-table {
-  width: 100%;
+    width: 100%;
 }
 
 .demo-button-container {
-  padding-bottom: 16px;
+    padding-bottom: 16px;
 }
 
 .example-viewport {
-  height: 300px;
-  width: 800px;
-  border: 1px solid black;
+    height: 300px;
+    width: 800px;
+    border: 1px solid black;
 }
 
 .example-item {
-  height: 50px;
+    height: 50px;
+}
+
+.assignment-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.scroll-box {
+    width: 87vw;
+    height: 70vh;
+}
+
+.scroll-box::-webkit-scrollbar {
+    width: 10px;
+    /* Set the width of the scrollbar */
+}
+
+.scroll-box::-webkit-scrollbar-thumb {
+    background-color: #888;
+    /* Set the color of the scrollbar thumb */
+    border-radius: 5px;
+    /* Set the border radius of the scrollbar thumb */
+}
+
+.scroll-box::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+    /* Set the color of the scrollbar thumb on hover */
 }

@@ -1,0 +1,50 @@
+.item {
+    width: 370px;
+    margin-bottom: 30px;
+}
+
+.header-box {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 50% 50%;
+}
+
+.avatar {
+    position: relative;
+    border: 1px solid grey;
+    border-radius: 100%;
+    width: 35px;
+    height: 35px;
+    padding: 1px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.avatar-img-box-img {
+    width: 100%;
+}
+
+.header-right {
+    display: flex;
+    justify-content: end;
+}
+
+.header-right-content {
+    text-align: center;
+}
+
+.header-right-content p {
+    margin: 0;
+}
+
+.box-matiere {
+}
+
+.box-content-item {
+    min-height: 28px;
+}
+
+.card-footer {
+    text-align: right;
+    width: 100%;
+}
