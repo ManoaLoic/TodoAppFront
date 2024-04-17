@@ -11,24 +11,46 @@ import { AssignmentsService } from './shared/assignments.service';
 import { MatieresService } from './shared/matieres.service';
 import { UsersService } from './shared/users.service';
 import { Observable, forkJoin, lastValueFrom } from 'rxjs';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
+import { User } from './users/user.model';
 
 @Component({
     selector: 'app-root',
     standalone: true,
     imports: [RouterOutlet, RouterLink, MatButtonModule, MatDividerModule,
         MatIconModule, MatSlideToggleModule,
-        AssignmentsComponent],
+        AssignmentsComponent,
+        MatSidenavModule, MatButtonModule, MatCheckboxModule, MatSidenavModule, MatToolbarModule, MatListModule],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css'
 })
 export class AppComponent {
-    title = 'Application de gestion des assignments';
+    title = 'Assignments Application';
+    opened: boolean = true;
+    profileOpened: boolean = false;
+    userConnected: User;
 
     constructor(private authService: AuthService,
         private assignmentsService: AssignmentsService,
         private matieresService: MatieresService,
         private usersService: UsersService,
-        private router: Router) { }
+        private router: Router) {
+            this.userConnected = new User();
+            this.userConnected.nom = 'Lezley Lambrook';
+            this.userConnected.email = 'llambrook1@blogger.com';
+            this.userConnected.isAdmin = true;
+    }
+
+    toggleNavBar() {
+        this.opened = !this.opened;
+    }
+
+    toggleProfile() {
+        this.profileOpened = !this.profileOpened;
+    }
 
     login() {
         // on utilise le service d'autentification
@@ -53,7 +75,7 @@ export class AppComponent {
             });
     }
 
-    private insertMatiereAndUser() : Promise<any>{
+    private insertMatiereAndUser(): Promise<any> {
         let inserts: Observable<any>[] = [];
         inserts.push(this.matieresService.peuplerBDavecForkJoin());
         inserts.push(this.usersService.peuplerBDavecForkJoin());

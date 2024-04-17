@@ -1,13 +1,75 @@
-<h1>
-  <nav>
-    <a routerLink="/home">{{title}}</a>
-  </nav>
-</h1>
-<mat-slide-toggle (click)="login()" color="primary">Login</mat-slide-toggle>
-<button mat-button (click)="genererDonneesDeTest()">Peupler BD(ne plus toucher)</button>
+<mat-toolbar>
+    <div class="container-nav">
+        <div class="left">
+            <button (click)="toggleNavBar()" mat-icon-button class="example-icon"
+                aria-label="Example icon-button with menu icon">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <span><a class="title-link" routerLink="/home">{{title}}</a></span>
+        </div>
+        <div class="right">
+            <button class="avar-button" (click)="toggleProfile()">
+                <div class="avatar">
+                    <div class="avatar-img-box">
+                        <img class="avatar-img-box-img" src="https://robohash.org/assumendaofficiiset.png?size=50x50&set=set1" />
+                    </div>
+                </div>
+            </button>
+        </div>
 
-<router-outlet></router-outlet>
+        <div class="profile scale-up-top" [class.hide]="!profileOpened">
+            <div class="profile-item">
+                <mat-icon class="m-small-right">account_circle</mat-icon>{{userConnected.nom}}
+            </div>
+            <div class="profile-item">
+                <mat-icon class="m-small-right">email</mat-icon>{{userConnected.email}}
+            </div>
+            @if(userConnected.isAdmin){
+                <div class="profile-item">
+                    <mat-icon class="m-small-right">accessibility_new</mat-icon>ADMINISTRATEUR
+                </div>
+            }
+            <div class="logOut-box">
+                <button mat-button>
+                    <div class="center">
+                        <mat-icon class="m-small-right">logout</mat-icon>
+                        Se déconnecter
+                    </div>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</mat-toolbar>
+<mat-sidenav-container class="example-container">
+    <mat-sidenav #sidenav mode="side" [(opened)]="opened">
+        <mat-list role="list">
+            <mat-list-item role="listitem">
+                <a class="nav-link" routerLink="/home">
+                    <div class="center">
+                        <mat-icon class="m-small-right">home</mat-icon>
+                        Accueil
+                    </div>
+                </a>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+                <a class="nav-link" routerLink="/home">
+                    <div class="center">
+                        <mat-icon class="m-small-right">assignment</mat-icon>
+                        Assignments
+                    </div>
+                </a>
+            </mat-list-item>
+        </mat-list>
+    </mat-sidenav>
+    <mat-sidenav-content class="">
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+<!-- <mat-slide-toggle (click)="login()" color="primary">Login</mat-slide-toggle>
+<button mat-button (click)="genererDonneesDeTest()">Peupler BD</button> -->
+
+<!-- <router-outlet></router-outlet> -->
 <!--
 <app-assignments></app-assignments>
 -->
-
