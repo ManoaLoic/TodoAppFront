@@ -9,11 +9,13 @@ import { Assignment } from '../assignment.model';
 import { AssignmentsService } from '../../shared/assignments.service';
 import  {RouterLink} from '@angular/router';
 import { AuthService } from '../../shared/auth.service';
+import { MatIconModule } from '@angular/material/icon';
+
 @Component({
   selector: 'app-assignment-detail',
   standalone: true,
   imports: [CommonModule, RouterLink,
-    MatButtonModule, MatCardModule, MatCheckboxModule],
+    MatButtonModule, MatCardModule, MatCheckboxModule, MatIconModule],
   templateUrl: './assignment-detail.component.html',
   styleUrl: './assignment-detail.component.css'
 })

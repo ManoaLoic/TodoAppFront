@@ -47,11 +47,13 @@ td {
 .assignment-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: start;
+    column-gap: 40px;
+    padding-left: 2vw;
 }
 
 .scroll-box {
-    width: 87vw;
+    width: 100%;
     height: 70vh;
 }
 

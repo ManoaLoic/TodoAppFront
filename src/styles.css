@@ -1,6 +1,23 @@
+:root {
+    --first-color: #B5C18E;
+    --second-color: #F7DCB9;
+    --third-color: #DEAC80;
+    --fourth-color: #B99470;
+    --white-color: #f4f4f4;
+}
+
+* {
+    font-family: "Handlee", cursive;
+}
+
+.font{
+    font-family: "Handlee", cursive !important;
+}
+
 html,
 body {
     height: 100%;
+    background: var(--white-color);
 }
 
 body {
@@ -21,4 +38,30 @@ body {
 
 .m-xx-large-left {
     margin-left: 60px;
+}
+
+.avatar {
+    position: relative;
+    border: 1px solid grey;
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
+    padding: 5px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.avatar-img-box-img {
+    width: 100%;
+}
+
+.avar-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.button-main{
+    color: var(--third-color);
+    border-color: var(--third-color) !important;
 }
