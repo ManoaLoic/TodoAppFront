@@ -68,7 +68,7 @@
     padding: 5px;
     box-sizing: border-box;
     overflow: hidden;
-    background-color: aliceblue;
+    background-color: var(--white-color);
 }
 
 .avatar-img-box-img {
