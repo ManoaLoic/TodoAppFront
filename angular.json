@@ -26,6 +26,7 @@
             ],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
+              "https://fonts.googleapis.com/css2?family=Handlee&display=swap",
               "src/styles.css"
             ],
             "scripts": []

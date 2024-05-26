@@ -1,4 +1,80 @@
-.container {
+.actions-box {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  margin-bottom: 30px;
+}
+
+.actions-box *{
+    margin: 0 1px;
+}
+
+.fiche-title{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.title-section{
+    background: var(--fourth-color);
+    border-radius: 20px 20px 0 0;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.fiche-card{
+    width: 100%;
+    background: var(--white-color);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 20px;
+}
+
+.fiche-main{
+    display: flex;
+    justify-content: center;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.vertical-center{
+    display: flex;
+    align-items: center;
+}
+
+.fiche-grid{
+    display: grid;
+    grid-template-columns: 20% 80%;
+}
+
+.title, .value{
+    display: flex;
+    align-items: center;
+    min-height: 50px;
+}
+
+.title, .title-section{
+    font-weight: bold;
+}
+
+.fiche-content{
+    padding: 0 5%;
+}
+
+.card-content, .mat-mdc-card-content:first-child{
+    padding: 0;
+}
+
+.card-content, .mat-mdc-card-content:last-child{
+    padding-bottom: 50px;
+}
+
+.card-content{
+    font-size: 18px;
+}
+
+.icon-title{
+    height: 40px;
+    width: 45px;
+    font-size: 40px;
 }
