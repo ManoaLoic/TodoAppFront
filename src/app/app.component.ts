@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet,NavigationEnd } from '@angular/router';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,6 +16,10 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { User } from './users/user.model';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { FULL_PAGE } from './shared/constants';
+
 
 @Component({
     selector: 'app-root',
@@ -23,7 +27,7 @@ import { User } from './users/user.model';
     imports: [RouterOutlet, RouterLink, MatButtonModule, MatDividerModule,
         MatIconModule, MatSlideToggleModule,
         AssignmentsComponent,
-        MatSidenavModule, MatButtonModule, MatCheckboxModule, MatSidenavModule, MatToolbarModule, MatListModule],
+        MatSidenavModule, MatButtonModule, MatCheckboxModule, MatSidenavModule, MatToolbarModule, MatListModule, CommonModule, FormsModule],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css'
 })
@@ -32,6 +36,8 @@ export class AppComponent {
     opened: boolean = true;
     profileOpened: boolean = false;
     userConnected: User;
+    isFullPage: boolean = false;
+
 
     constructor(private authService: AuthService,
         private assignmentsService: AssignmentsService,
@@ -43,6 +49,20 @@ export class AppComponent {
             this.userConnected.email = 'llambrook1@blogger.com';
             this.userConnected.isAdmin = true;
     }
+
+    isLogged() {
+        if(this.authService.loggedIn) {
+        }
+        return this.authService.loggedIn;
+      }
+    
+      ngOnInit() {
+        this.router.events.subscribe(event => {
+          if (event instanceof NavigationEnd) {
+            this.isFullPage = FULL_PAGE.includes(event.url);
+          }
+        });
+      }
 
     toggleNavBar() {
         this.opened = !this.opened;

@@ -3,13 +3,14 @@ import { Assignment, Auteur } from '../assignments/assignment.model';
 import { Observable, forkJoin, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { LoggingService } from './logging.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 // importation des données de test
 import { bdInitialAssignments } from './data';
 import { API_ENDPOINT } from './constants';
 import { User } from '../users/user.model';
 import { Matiere } from '../matieres/matiere.model';
+import { AuthService } from './auth.service';
 
 @Injectable({
     providedIn: 'root'
@@ -18,17 +19,26 @@ export class AssignmentsService {
     assignments: Assignment[] = [];
 
     constructor(private logService: LoggingService,
-        private http: HttpClient) { }
+        private http: HttpClient, private authService: AuthService) { }
 
     uri = `${API_ENDPOINT}/assignments`;
 
-    // retourne tous les assignments
+    authToken = this.authService.getAuthToken();
+    Authorization = `Bearer ${this.authToken}`;
+
     getAssignments(): Observable<Assignment[]> {
-        return this.http.get<Assignment[]>(this.uri);
+        const headers = new HttpHeaders({
+            'Authorization': this.Authorization,
+        });
+
+        return this.http.get<Assignment[]>(this.uri, { headers: headers });
     }
 
     getAssignmentsPagines(page: number, limit: number): Observable<any> {
-        return this.http.get<Assignment[]>(this.uri + "?page=" + page + "&limit=" + limit);
+        const headers = new HttpHeaders({
+            'Authorization': this.Authorization,
+        });
+        return this.http.get<Assignment[]>(this.uri + "?page=" + page + "&limit=" + limit, {headers});
     }
 
     // renvoie un assignment par son id, renvoie undefined si pas trouvé
@@ -117,7 +127,7 @@ export class AssignmentsService {
             nouvelAssignment.rendu = a.rendu;
             nouvelAssignment.note = a.note || undefined;
             nouvelAssignment.remarque = a.remarque || '';
-            if(users[a.auteurId]){
+            if (users[a.auteurId]) {
                 const user = users[a.auteurId];
                 const auteur = new Auteur();
                 auteur._id = user._id;
@@ -126,7 +136,7 @@ export class AssignmentsService {
 
                 nouvelAssignment.auteur = auteur;
             }
-            if(matieres[a.matiereId]){
+            if (matieres[a.matiereId]) {
                 const matiereInput = matieres[a.matiereId];
                 const matiere = new Matiere();
                 matiere._id = matiereInput._id;
