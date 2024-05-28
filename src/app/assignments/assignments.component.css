@@ -6,6 +6,13 @@ td {
     padding: 20px;
 }
 
+.mat-flat-button {
+    background-color: var(--third-color);
+    color: black;
+    border: 1px solid var(--third-color);
+}
+
+
 .rendu {
     color: green;
 }

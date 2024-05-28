@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CdkVirtualScrollViewport,ScrollingModule} from '@angular/cdk/scrolling';
@@ -44,7 +44,6 @@ import { MatIconModule } from '@angular/material/icon';
     ],
 })
 export class AssignmentsComponent implements OnInit {
-    titre = 'Liste des assignments';
     // Pour la pagination
     page = 1;
     limit = 10;
@@ -62,6 +61,9 @@ export class AssignmentsComponent implements OnInit {
 
     // pour virtual scroll infini
     @ViewChild('scroller') scroller!: CdkVirtualScrollViewport;
+    @Input() rendu : boolean = false;
+
+    titre = '';
 
     // ici on injecte le service
     constructor(private assignmentsService: AssignmentsService,
@@ -74,6 +76,7 @@ export class AssignmentsComponent implements OnInit {
     ngOnInit() {
         console.log('ngOnInit assignments, appelée AVANT affichage du composant');
         this.getAssignmentsFromService();
+        this.titre = this.rendu ? 'Liste des Devoirs déja faits' : 'Liste des choses à faire';
     }
 
     ngAfterViewInit() {
@@ -120,7 +123,7 @@ export class AssignmentsComponent implements OnInit {
     getAssignmentsFromService() {
         // on récupère les assignments depuis le service
         this.assignmentsService
-            .getAssignmentsPagines(this.page, this.limit)
+            .getAssignmentsPagines(this.page, this.limit, this.rendu)
             .subscribe((data) => {
                 // les données arrivent ici au bout d'un certain temps
                 console.log('Données arrivées');
@@ -138,7 +141,7 @@ export class AssignmentsComponent implements OnInit {
     getAssignmentsFromServicePourScrollInfini() {
         // on récupère les assignments depuis le service
         this.assignmentsService
-            .getAssignmentsPagines(this.page, this.limit)
+            .getAssignmentsPagines(this.page, this.limit, this.rendu)
             .subscribe((data) => {
                 // les données arrivent ici au bout d'un certain temps
                 console.log('Données arrivées');

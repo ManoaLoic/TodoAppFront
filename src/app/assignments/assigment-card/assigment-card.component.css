@@ -48,3 +48,25 @@
     text-align: right;
     width: 100%;
 }
+
+.mat-flat-button {
+    background-color: var(--third-color);
+    color: black;
+    border: 1px solid var(--third-color);
+}
+
+.card-toDo, .card-done{
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+    border-top: 7px;
+    border-style: solid;
+}
+
+.card-done{
+    border-color: var(--fourth-color);
+}
+
+.card-toDo{
+    border-color: var(--first-color);
+}

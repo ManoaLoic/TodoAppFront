@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -20,7 +20,7 @@ import { User } from './users/user.model';
 @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [RouterOutlet, RouterLink, MatButtonModule, MatDividerModule,
+    imports: [RouterOutlet, RouterLink, MatButtonModule, MatDividerModule, RouterLinkActive,
         MatIconModule, MatSlideToggleModule,
         AssignmentsComponent,
         MatSidenavModule, MatButtonModule, MatCheckboxModule, MatSidenavModule, MatToolbarModule, MatListModule],

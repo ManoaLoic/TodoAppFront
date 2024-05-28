@@ -5,6 +5,7 @@
 .title-link {
     text-decoration: none;
     color: black;
+    font-weight: bold;
 }
 
 .mat-toolbar {
@@ -117,6 +118,15 @@
 
 .sidenav{
     background: var(--white-color);
+}
+
+.active-route{
+    background: var(--third-color);
+    color: black;
+    border: 7px solid var(--fourth-color);
+    border-top: 0;
+    border-bottom: 0;
+    border-right: 0;
 }
 
 /* ----------------------------------------------

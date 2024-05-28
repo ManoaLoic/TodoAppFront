@@ -53,7 +53,7 @@
                     </div>
                 </a>
             </mat-list-item>
-            <mat-list-item role="listitem">
+            <mat-list-item role="listitem" routerLinkActive="active-route" [routerLinkActiveOptions]="{ exact: true }">
                 <a mat-button class="nav-link" routerLink="/home">
                     <div class="center">
                         <mat-icon class="m-small-right">home</mat-icon>
@@ -62,8 +62,8 @@
                 </a>
             </mat-list-item>
 
-            <mat-list-item role="listitem">
-                <a mat-button class="nav-link" routerLink="/home">
+            <mat-list-item role="listitem" routerLinkActive="active-route" [routerLinkActiveOptions]="{ exact: true }">
+                <a mat-button class="nav-link" routerLink="/toDo">
                     <div class="center">
                         <mat-icon class="m-small-right">assignment</mat-icon>
                         A Faire
@@ -71,8 +71,8 @@
                 </a>
             </mat-list-item>
 
-            <mat-list-item role="listitem">
-                <a mat-button class="nav-link" routerLink="/home">
+            <mat-list-item role="listitem" routerLinkActive="active-route" [routerLinkActiveOptions]="{ exact: true }">
+                <a mat-button class="nav-link" routerLink="/done">
                     <div class="center">
                         <mat-icon class="m-small-right">done_outline</mat-icon>
                         Déja fait
