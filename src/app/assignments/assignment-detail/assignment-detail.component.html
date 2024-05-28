@@ -1,32 +1,96 @@
 @if(assignmentTransmis) {
-<h2>Détail de l'assignment:</h2>
+<div class="fiche-main">
+    <mat-card class="fiche-card">
+        <mat-card-content class="card-content">
+            <div class="title-section">
+                <div class="vertical-center">
+                    <mat-icon class="m-small-right icon-title">assignment</mat-icon>
+                </div>
+                <div>
+                    <mat-card-title class="text-center fiche-title font">{{ assignmentTransmis.nom }}</mat-card-title>
+                    <mat-card-subtitle class="text-center fiche-subtitle font">{{ assignmentTransmis.dateDeCreation |
+                        date
+                        }}</mat-card-subtitle>
+                </div>
+            </div>
 
-<mat-card>
-  <mat-card-content>
-    <mat-card-title>{{ assignmentTransmis.nom }}</mat-card-title>
-    <mat-card-subtitle>{{
-      assignmentTransmis.dateDeRendu | date
-    }}</mat-card-subtitle>
-  </mat-card-content>
-  <mat-card-actions class="container">
-    @if(!assignmentTransmis.rendu) {
-    <mat-checkbox (click)="onAssignmentRendu()">Rendu</mat-checkbox>
-    }
-    <button mat-raised-button color="warn" (click)="onDelete()"
-            [disabled]="!isAdmin()"
-    >
-      DELETE
-    </button>
-    <nav>
-      <a routerLink="edit">
-        <button mat-raised-button color="primary"
-                [disabled]="!isAdmin()"
-        >
-          EDIT
-        </button>
-      </a>
-    </nav>
-  </mat-card-actions>
-</mat-card>
+            <mat-card-actions class="actions-box">
+                @if(!assignmentTransmis.rendu) {
+                <mat-checkbox (click)="onAssignmentRendu()">Rendu</mat-checkbox>
+                }
+                <button mat-button (click)="onDelete()">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                <nav>
+                    <a routerLink="edit">
+                        <button mat-button>
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                    </a>
+                </nav>
+            </mat-card-actions>
 
+            <div class="fiche-content">
+                <div class="fiche-grid">
+
+                    <div class="title">
+                        <span class="m-small-right">- Auteur: </span>
+                    </div>
+                    <div class="value vertical-center">
+                        <div class="avatar m-small-right">
+                            <img class="avatar-img-box-img" src="{{assignmentTransmis.auteur.image}}" />
+                        </div>
+                        <span>{{assignmentTransmis.auteur.nom}}</span>
+                    </div>
+
+                    <div class="title">
+                        <span class="m-small-right">- Rendu: </span>
+                    </div>
+                    <div class="value vertical-center">
+                        @if(assignmentTransmis.rendu){
+                        <mat-icon style="color: green;">done_outline</mat-icon>
+                        }@else{
+                        <mat-icon style="color: red;">schedule</mat-icon>
+                        }
+                    </div>
+
+                    <div class="title">
+                        <span class="m-small-right">- Note: </span>
+                    </div>
+                    <div class="value vertical-center">
+                        {{assignmentTransmis.note}}
+                    </div>
+
+                    <div class="title">
+                        <span class="m-small-right">- Date de rendu: </span>
+                    </div>
+                    <div class="value vertical-center">
+                        {{assignmentTransmis.dateDeRendu | date}}
+                    </div>
+
+                    <div class="title">
+                        <span class="m-small-right">- Matiere: </span>
+                    </div>
+                    <div class="value vertical-center">
+                        <div class="box-matiere center">
+                            <div class="center avatar m-small-right">
+                                <img class="avatar-img-box-img m-small-right"
+                                    src="{{assignmentTransmis.matiere.image}}" />
+                            </div>
+                            <span>{{assignmentTransmis.matiere.nom}}</span>
+                        </div>
+                    </div>
+
+                    <div class="title">
+                        <span class="m-small-right">- Remarque: </span>
+                    </div>
+                    <div class="value vertical-center">
+                        {{assignmentTransmis.remarque}}
+                    </div>
+
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
 }
