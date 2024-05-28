@@ -4,6 +4,7 @@ import { API_ENDPOINT, ME_KEY, TOKEN_KEY } from './constants';
 import { Observable } from 'rxjs';
 import { User } from '../users/user.model';
 import { AuthResponse, AuthUser } from './authResponse.model';
+import * as jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class AuthService {
   uri = `${API_ENDPOINT}/auth`;
 
   doAuth(email: string, password: string): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(this.uri, {email, password});
+    return this.http.post<AuthResponse>(this.uri, { email, password });
   }
 
   getAuthToken(): string | null {
@@ -28,19 +29,52 @@ export class AuthService {
     return userData ? JSON.parse(userData) : null;
   }
 
-  logIn() {
+  isLoggedIn(): boolean {
+    const token = this.getAuthToken();
+    const isLoggedIn = !!token && !this.isTokenExpired(token);
+    console.log("isLoggedIn:", isLoggedIn);
+    return isLoggedIn;
+  }
+
+  logIn(token: string, user: AuthUser) {
+    sessionStorage.setItem(TOKEN_KEY, token);
+    sessionStorage.setItem(ME_KEY, JSON.stringify(user));
     this.loggedIn = true;
   }
 
   logOut() {
+    console.log("Déconnexion de l'utilisateur");
+    sessionStorage.removeItem(TOKEN_KEY);
+    sessionStorage.removeItem(ME_KEY);
     this.loggedIn = false;
   }
 
-  isAdmin() {
-    const promesse = new Promise((resolve, reject) => {
-      resolve(this.loggedIn);
-    });
+  // isAdmin() {
+  //   const promesse = new Promise((resolve, reject) => {
+  //     resolve(this.loggedIn);
+  //   });
 
-    return promesse;
+  //   return promesse;
+  // }
+
+  isAdmin(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      if (!this.isLoggedIn()) {
+        resolve(false);
+      } else {
+        const currentUser = this.getCurrentUser();
+        resolve(currentUser && currentUser.isAdmin);
+      }
+    });
+  }
+
+  isTokenExpired(token: string): boolean {
+    const decoded: any = jwt_decode.jwtDecode(token);
+    if (decoded.exp === undefined) {
+      return false;
+    }
+    const date = new Date(0);
+    date.setUTCSeconds(decoded.exp);
+    return date.valueOf() < new Date().valueOf();
   }
 }

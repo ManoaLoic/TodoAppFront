@@ -26,8 +26,7 @@ export class LoginComponent {
   onSubmit(): void {
     this.authService.doAuth(this.login, this.password).pipe(
       tap(data => {
-        sessionStorage.setItem(TOKEN_KEY, data.token);
-        sessionStorage.setItem(ME_KEY, JSON.stringify(data.user));
+        this.authService.logIn(data.token, data.user);
         this.router.navigate(['/home']);
       }),
       catchError(error => {

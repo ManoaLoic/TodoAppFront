@@ -43,7 +43,11 @@ export class AssignmentsService {
 
     // renvoie un assignment par son id, renvoie undefined si pas trouvé
     getAssignment(id: number): Observable<Assignment | undefined> {
-        return this.http.get<Assignment>(this.uri + "/" + id)
+        const headers = new HttpHeaders({
+            'Authorization': this.Authorization
+        });
+
+        return this.http.get<Assignment>(this.uri + "/" + id, { headers: headers })
             .pipe(
                 catchError(this.handleError<any>('### catchError: getAssignments by id avec id=' + id))
                 /*

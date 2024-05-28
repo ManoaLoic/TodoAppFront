@@ -76,7 +76,7 @@ export class AppComponent {
         // on utilise le service d'autentification
         // pour se connecter ou se déconnecter
         if (!this.authService.loggedIn) {
-            this.authService.logIn();
+            this.router.navigate(['/login']);
         } else {
             this.authService.logOut();
             // on navigue vers la page d'accueil
