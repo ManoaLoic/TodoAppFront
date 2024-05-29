@@ -13,11 +13,11 @@ export const routes: Routes = [
   {
     path: 'home', component: AssignmentsComponent, canActivate: [authGuard]
   },
-  { path: "add", component: AddAssignmentComponent, canActivate: [adminGuard] },
+  { path: "add", component: AddAssignmentComponent, canActivate: [authGuard] },
   { path: "assignment/:id", component: AssignmentDetailComponent, canActivate: [authGuard] },
   {
     path: "assignment/:id/edit",
     component: EditAssignmentComponent,
-    canActivate: [adminGuard]
+    canActivate: [authGuard]
   }
 ];

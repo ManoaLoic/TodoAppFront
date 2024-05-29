@@ -23,31 +23,21 @@ export class AssignmentsService {
 
     uri = `${API_ENDPOINT}/assignments`;
 
-    authToken = this.authService.getAuthToken();
-    Authorization = `Bearer ${this.authToken}`;
-
     getAssignments(): Observable<Assignment[]> {
-        const headers = new HttpHeaders({
-            'Authorization': this.Authorization,
-        });
-
-        return this.http.get<Assignment[]>(this.uri, { headers: headers });
+        return this.http.get<Assignment[]>(this.uri).pipe(
+            catchError(this.handleError<Assignment[]>('getAssignments', []))
+        );
     }
 
     getAssignmentsPagines(page: number, limit: number): Observable<any> {
-        const headers = new HttpHeaders({
-            'Authorization': this.Authorization,
-        });
-        return this.http.get<Assignment[]>(this.uri + "?page=" + page + "&limit=" + limit, {headers});
+        return this.http.get<Assignment[]>(this.uri + "?page=" + page + "&limit=" + limit).pipe(
+            catchError(this.handleError<any>('getAssignmentsPagines', []))
+        );
     }
 
     // renvoie un assignment par son id, renvoie undefined si pas trouvé
     getAssignment(id: number): Observable<Assignment | undefined> {
-        const headers = new HttpHeaders({
-            'Authorization': this.Authorization
-        });
-
-        return this.http.get<Assignment>(this.uri + "/" + id, { headers: headers })
+        return this.http.get<Assignment>(this.uri + "/" + id)
             .pipe(
                 catchError(this.handleError<any>('### catchError: getAssignments by id avec id=' + id))
                 /*
@@ -66,24 +56,15 @@ export class AssignmentsService {
         //return of(a);
     }
 
-    // Methode appelée par catchError, elle doit renvoyer
-    // i, Observable<T> où T est le type de l'objet à renvoyer
-    // (généricité de la méthode)
-    private handleError<T>(operation: any, result?: T) {
-        return (error: any): Observable<T> => {
-            console.log(error); // pour afficher dans la console
-            console.log(operation + ' a échoué ' + error.message);
-
-            return of(result as T);
-        }
-    };
 
     // ajoute un assignment et retourne une confirmation
     addAssignment(assignment: Assignment): Observable<any> {
         //this.assignments.push(assignment);
         this.logService.log(assignment.nom, "ajouté");
         //return of("Assignment ajouté avec succès");
-        return this.http.post<Assignment>(this.uri, assignment);
+        return this.http.post<Assignment>(this.uri, assignment).pipe(
+            catchError(this.handleError<any>('addAssignment'))
+        );
     }
 
     updateAssignment(assignment: Assignment): Observable<any> {
@@ -92,7 +73,9 @@ export class AssignmentsService {
         // il faudra faire une requête HTTP pour envoyer l'objet modifié
         this.logService.log(assignment.nom, "modifié");
         //return of("Assignment modifié avec succès");
-        return this.http.put<Assignment>(this.uri, assignment);
+        return this.http.put<Assignment>(this.uri, assignment).pipe(
+            catchError(this.handleError<any>('updateAssignment'))
+        );
     }
 
     deleteAssignment(assignment: Assignment): Observable<any> {
@@ -101,7 +84,9 @@ export class AssignmentsService {
         //this.assignments.splice(pos, 1);
         this.logService.log(assignment.nom, "supprimé");
         //return of("Assignment supprimé avec succès");
-        return this.http.delete(this.uri + "/" + assignment._id);
+        return this.http.delete(this.uri + "/" + assignment._id).pipe(
+            catchError(this.handleError<any>('deleteAssignment'))
+        );
     }
 
     // VERSION NAIVE (on ne peut pas savoir quand l'opération des 1000 insertions est terminée)
@@ -158,5 +143,16 @@ export class AssignmentsService {
         return forkJoin(appelsVersAddAssignment);
     }
 
+    // Methode appelée par catchError, elle doit renvoyer
+    // i, Observable<T> où T est le type de l'objet à renvoyer
+    // (généricité de la méthode)
+    private handleError<T>(operation: any, result?: T) {
+        return (error: any): Observable<T> => {
+            console.log(error); // pour afficher dans la console
+            console.log(operation + ' a échoué ' + error.message);
+
+            return of(result as T);
+        }
+    };
 
 }
