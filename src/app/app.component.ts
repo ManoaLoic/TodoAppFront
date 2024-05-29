@@ -102,6 +102,11 @@ export class AppComponent {
         }
     }
 
+    logout() {
+        this.authService.logOut();
+        this.router.navigate(['/login']);
+    }
+
     async genererDonneesDeTest() {
         await this.insertMatiereAndUser();
         const users = await lastValueFrom(this.usersService.getUsersPagines(1, 1000));
