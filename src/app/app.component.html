@@ -1,4 +1,4 @@
-<mat-toolbar class="toolbar-nav">
+<mat-toolbar *ngIf="!isFullPage">
     <div class="container-nav">
         <div class="left">
             <button (click)="toggleNavBar()" mat-icon-button class="example-icon"
@@ -42,8 +42,8 @@
 
     </div>
 </mat-toolbar>
-<mat-sidenav-container>
-    <mat-sidenav class="sidenav" #sidenav mode="side" [(opened)]="opened">
+<mat-sidenav-container class="matNav-content">
+    <mat-sidenav *ngIf="!isFullPage" #sidenav mode="side" [(opened)]="opened">
         <mat-list role="list">
             <mat-list-item role="listitem">
                 <a mat-stroked-button color="primary" class="nav-link button-main" routerLink="/add">
@@ -83,6 +83,7 @@
         </mat-list>
     </mat-sidenav>
     <mat-sidenav-content class="">
+        <!-- <button (click)="genererDonneesDeTest()">Data</button> -->
         <router-outlet></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>

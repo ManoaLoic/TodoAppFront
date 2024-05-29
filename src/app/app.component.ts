@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Router, RouterLinkActive, RouterOutlet, RouterOutlet,NavigationEnd } from '@angular/router';
+
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,6 +16,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { User } from './users/user.model';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { FULL_PAGE } from './shared/constants';
 import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { Assignment } from './assignments/assignment.model';
 
@@ -25,7 +28,7 @@ import { Assignment } from './assignments/assignment.model';
     imports: [RouterOutlet, RouterLink, MatButtonModule, MatDividerModule, RouterLinkActive, DragDropModule,
         MatIconModule, MatSlideToggleModule,
         AssignmentsComponent,
-        MatSidenavModule, MatButtonModule, MatCheckboxModule, MatSidenavModule, MatToolbarModule, MatListModule],
+        MatSidenavModule, MatButtonModule, MatCheckboxModule, MatSidenavModule, MatToolbarModule, MatListModule, CommonModule, FormsModule],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css'
 })
@@ -34,6 +37,7 @@ export class AppComponent {
     opened: boolean = true;
     profileOpened: boolean = false;
     userConnected: User;
+    isFullPage: boolean = false;
     targetList: string = '/done';
 
     constructor(private authService: AuthService,
@@ -46,6 +50,20 @@ export class AppComponent {
             this.userConnected.email = 'llambrook1@blogger.com';
             this.userConnected.isAdmin = true;
     }
+
+
+    isLogged() {
+        if(this.authService.loggedIn) {
+        }
+        return this.authService.loggedIn;
+      }
+    
+      ngOnInit() {
+        this.router.events.subscribe(event => {
+          if (event instanceof NavigationEnd) {
+            this.isFullPage = FULL_PAGE.includes(event.url);
+          }
+        });
 
     onAssignmentDropped(event: CdkDragDrop<Assignment[]>) {
         alert('Tay be');
@@ -75,7 +93,7 @@ export class AppComponent {
         // on utilise le service d'autentification
         // pour se connecter ou se déconnecter
         if (!this.authService.loggedIn) {
-            this.authService.logIn();
+            this.router.navigate(['/login']);
         } else {
             this.authService.logOut();
             // on navigue vers la page d'accueil

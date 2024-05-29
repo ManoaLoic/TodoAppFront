@@ -112,6 +112,9 @@
     right: 6px;
 }
 
+.matNav-content{
+    height: 100%;
+}
 .toolbar-nav{
     background: var(--first-color);
 }
