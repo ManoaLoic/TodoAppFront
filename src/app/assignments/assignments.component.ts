@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, NgZone, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CdkVirtualScrollViewport,ScrollingModule} from '@angular/cdk/scrolling';
+import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSliderModule } from '@angular/material/slider';
@@ -18,6 +18,8 @@ import { RouterLink } from '@angular/router';
 import { filter, map, pairwise, tap, throttleTime } from 'rxjs/operators';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
+
 @Component({
     selector: 'app-assignments',
     standalone: true,
@@ -41,6 +43,7 @@ import { MatIconModule } from '@angular/material/icon';
         MatCardModule,
         MatIconModule,
         AssigmentCardComponent,
+        DragDropModule,
     ],
 })
 export class AssignmentsComponent implements OnInit {
@@ -61,13 +64,21 @@ export class AssignmentsComponent implements OnInit {
 
     // pour virtual scroll infini
     @ViewChild('scroller') scroller!: CdkVirtualScrollViewport;
-    @Input() rendu : boolean = false;
+    @Input() rendu: boolean = false;
 
     titre = '';
 
     // ici on injecte le service
     constructor(private assignmentsService: AssignmentsService,
         private ngZone: NgZone) { }
+
+    drop(event: CdkDragDrop<string[]>) {}
+
+    onDragStarted(event: any) {
+    }
+
+    onDragEnded(event: any) {
+    }
 
     getColor(a: any) {
         return a.rendu ? 'green' : 'red';

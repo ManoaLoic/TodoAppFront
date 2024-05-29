@@ -1,4 +1,8 @@
-<mat-card class="item {{assignment.rendu ? 'card-done' : 'card-toDo'}}">
+<mat-card class="item {{assignment.rendu ? 'card-done' : 'card-toDo'}}" cdkDrag>
+    <div *cdkDragPreview class="preview">
+        {{assignment.nom}}
+    </div>
+    <div class="placeholder" *cdkDragPlaceholder></div>
     <mat-card-header>
         <div class="header-box">
             <div class="left">

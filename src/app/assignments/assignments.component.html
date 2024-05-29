@@ -5,12 +5,14 @@
         </a>
     </div>
 
-    <h2>{{ titre }}</h2>
+    <h2 cdkDrag (cdkDragStarted)="onDragStarted($event)" (cdkDragEnded)="onDragEnded($event)">{{ titre }}</h2>
 
     <cdk-virtual-scroll-viewport itemSize="50" class="scroll-box" #scroller>
-        <div class="assignment-list">
+        <div cdkDropList class="assignment-list" (cdkDropListDropped)="drop($event)">
             <div *cdkVirtualFor="let a of assignments">
-                <app-assigment-card [assignment]="a"></app-assigment-card>
+                <div class="example-box">
+                    <app-assigment-card [assignment]="a"></app-assigment-card>
+                </div>
             </div>
         </div>
     </cdk-virtual-scroll-viewport>

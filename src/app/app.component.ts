@@ -16,11 +16,13 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { User } from './users/user.model';
+import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
+import { Assignment } from './assignments/assignment.model';
 
 @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [RouterOutlet, RouterLink, MatButtonModule, MatDividerModule, RouterLinkActive,
+    imports: [RouterOutlet, RouterLink, MatButtonModule, MatDividerModule, RouterLinkActive, DragDropModule,
         MatIconModule, MatSlideToggleModule,
         AssignmentsComponent,
         MatSidenavModule, MatButtonModule, MatCheckboxModule, MatSidenavModule, MatToolbarModule, MatListModule],
@@ -32,6 +34,7 @@ export class AppComponent {
     opened: boolean = true;
     profileOpened: boolean = false;
     userConnected: User;
+    targetList: string = '/done';
 
     constructor(private authService: AuthService,
         private assignmentsService: AssignmentsService,
@@ -43,6 +46,22 @@ export class AppComponent {
             this.userConnected.email = 'llambrook1@blogger.com';
             this.userConnected.isAdmin = true;
     }
+
+    onAssignmentDropped(event: CdkDragDrop<Assignment[]>) {
+        alert('Tay be');
+        if (event.previousContainer === event.container) {
+        //   moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+        } else {
+          // Update data source and target list based on drop location
+        //   transferArrayItem(
+        //     event.previousContainer.data,
+        //     event.container.data,
+        //     event.previousIndex,
+        //     event.currentIndex
+        //   );
+          this.targetList = '/done'; // Update target list to "Déja fait" after dropping
+        }
+      }
 
     toggleNavBar() {
         this.opened = !this.opened;

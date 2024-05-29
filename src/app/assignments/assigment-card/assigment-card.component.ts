@@ -5,11 +5,12 @@ import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
 import { Assignment } from '../assignment.model';
 import { MatButtonModule } from '@angular/material/button';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-assigment-card',
   standalone: true,
-  imports: [MatIconModule, MatCardModule, RouterLink, CommonModule, MatButtonModule],
+  imports: [MatIconModule, MatCardModule, RouterLink, CommonModule, MatButtonModule, DragDropModule],
   templateUrl: './assigment-card.component.html',
   styleUrl: './assigment-card.component.css'
 })

@@ -71,9 +71,9 @@
                 </a>
             </mat-list-item>
 
-            <mat-list-item role="listitem" routerLinkActive="active-route" [routerLinkActiveOptions]="{ exact: true }">
+            <mat-list-item role="listitem">
                 <a mat-button class="nav-link" routerLink="/done">
-                    <div class="center">
+                    <div cdkDropList (cdkDropListDropped)="onAssignmentDropped($event)" class="center">
                         <mat-icon class="m-small-right">done_outline</mat-icon>
                         Déja fait
                     </div>
