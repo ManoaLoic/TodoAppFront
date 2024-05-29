@@ -18,7 +18,7 @@ import { RouterLink } from '@angular/router';
 import { filter, map, pairwise, tap, throttleTime } from 'rxjs/operators';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDragStart, DragDropModule } from '@angular/cdk/drag-drop';
 
 @Component({
     selector: 'app-assignments',
@@ -73,12 +73,6 @@ export class AssignmentsComponent implements OnInit {
         private ngZone: NgZone) { }
 
     drop(event: CdkDragDrop<string[]>) {}
-
-    onDragStarted(event: any) {
-    }
-
-    onDragEnded(event: any) {
-    }
 
     getColor(a: any) {
         return a.rendu ? 'green' : 'red';

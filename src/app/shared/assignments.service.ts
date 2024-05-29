@@ -81,7 +81,7 @@ export class AssignmentsService {
         // il faudra faire une requête HTTP pour envoyer l'objet modifié
         //return of("Assignment modifié avec succès");
         const currentUser = this.authService.getCurrentUser();
-    
+
         // Vérifier si l'utilisateur est connecté
         if (!currentUser) {
             return throwError('User not logged in');
@@ -95,8 +95,8 @@ export class AssignmentsService {
                         catchError(this.handleError<any>('updateAssignment'))
                     );
                 } else {
-                    const assignmentId = parseInt(assignment._id as string, 10);
-                    if (!isNaN(assignmentId)) {
+                    const assignmentId = assignment._id;
+                    if (assignmentId) {
                         return this.getAssignment(assignmentId).pipe(
                             mergeMap(existingAssignment => {
                                 if (existingAssignment?.auteur?._id === currentUser._id) {
@@ -121,8 +121,8 @@ export class AssignmentsService {
         // on va supprimer l'assignment dans le tableau
         //let pos = this.assignments.indexOf(assignment);
         //this.assignments.splice(pos, 1);
-        const assignmentId = parseInt(assignment._id as string, 10);
-        if (isNaN(assignmentId)) {
+        const assignmentId = assignment._id;
+        if (!assignmentId) {
             return throwError('Invalid assignment ID');
         }
 
