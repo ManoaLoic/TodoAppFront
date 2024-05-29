@@ -5,6 +5,7 @@
 .title-link {
     text-decoration: none;
     color: black;
+    font-weight: bold;
 }
 
 .mat-toolbar {
@@ -120,6 +121,35 @@
 
 .sidenav{
     background: var(--white-color);
+}
+
+.active-route{
+    background: var(--third-color);
+    color: black;
+    border: 7px solid var(--fourth-color);
+    border-top: 0;
+    border-bottom: 0;
+    border-right: 0;
+}
+
+.sidenav {
+    z-index: 1; /* Lower z-index for the sidenav */
+}
+
+.router-outlet-container {
+    position: relative;
+    z-index: 2; /* Higher z-index for the router-outlet */
+    padding: 20px; /* Optional padding for better presentation */
+}
+
+.mat-drawer.mat-drawer-side{
+    z-index: 1;
+}
+
+.dropped-assignment {
+    background-color: #d3ffd3; /* Light green background to indicate the drop */
+    border: 2px solid #4CAF50; /* Green border */
+    transition: background-color 0.3s ease, border 0.3s ease;
 }
 
 /* ----------------------------------------------

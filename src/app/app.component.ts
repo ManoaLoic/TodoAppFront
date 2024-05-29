@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router, RouterOutlet,NavigationEnd } from '@angular/router';
+import { Router, RouterLinkActive, RouterOutlet, RouterOutlet,NavigationEnd } from '@angular/router';
+
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -19,12 +19,13 @@ import { User } from './users/user.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FULL_PAGE } from './shared/constants';
-
+import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
+import { Assignment } from './assignments/assignment.model';
 
 @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [RouterOutlet, RouterLink, MatButtonModule, MatDividerModule,
+    imports: [RouterOutlet, RouterLink, MatButtonModule, MatDividerModule, RouterLinkActive, DragDropModule,
         MatIconModule, MatSlideToggleModule,
         AssignmentsComponent,
         MatSidenavModule, MatButtonModule, MatCheckboxModule, MatSidenavModule, MatToolbarModule, MatListModule, CommonModule, FormsModule],
@@ -37,7 +38,7 @@ export class AppComponent {
     profileOpened: boolean = false;
     userConnected: User;
     isFullPage: boolean = false;
-
+    targetList: string = '/done';
 
     constructor(private authService: AuthService,
         private assignmentsService: AssignmentsService,
@@ -49,6 +50,7 @@ export class AppComponent {
             this.userConnected.email = 'llambrook1@blogger.com';
             this.userConnected.isAdmin = true;
     }
+
 
     isLogged() {
         if(this.authService.loggedIn) {
@@ -62,6 +64,21 @@ export class AppComponent {
             this.isFullPage = FULL_PAGE.includes(event.url);
           }
         });
+
+    onAssignmentDropped(event: CdkDragDrop<Assignment[]>) {
+        alert('Tay be');
+        if (event.previousContainer === event.container) {
+        //   moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+        } else {
+          // Update data source and target list based on drop location
+        //   transferArrayItem(
+        //     event.previousContainer.data,
+        //     event.container.data,
+        //     event.previousIndex,
+        //     event.currentIndex
+        //   );
+          this.targetList = '/done'; // Update target list to "Déja fait" after dropping
+        }
       }
 
     toggleNavBar() {
