@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Assignment, Auteur } from '../assignments/assignment.model';
-import { Observable, forkJoin, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable, forkJoin, of, throwError, from } from 'rxjs';
+import { catchError, map, tap, mergeMap } from 'rxjs/operators';
 import { LoggingService } from './logging.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -71,10 +71,41 @@ export class AssignmentsService {
         // l'assignment passé en paramètre est le même objet que dans le tableau
         // plus tard on verra comment faire avec une base de données
         // il faudra faire une requête HTTP pour envoyer l'objet modifié
-        this.logService.log(assignment.nom, "modifié");
         //return of("Assignment modifié avec succès");
-        return this.http.put<Assignment>(this.uri, assignment).pipe(
-            catchError(this.handleError<any>('updateAssignment'))
+        const currentUser = this.authService.getCurrentUser();
+    
+        // Vérifier si l'utilisateur est connecté
+        if (!currentUser) {
+            return throwError('User not logged in');
+        }
+
+        return from(this.authService.isAdmin()).pipe(
+            mergeMap(isAdmin => {
+                if (isAdmin) {
+                    this.logService.log(assignment.nom, 'modifié par un administrateur');
+                    return this.http.put<Assignment>(this.uri, assignment).pipe(
+                        catchError(this.handleError<any>('updateAssignment'))
+                    );
+                } else {
+                    const assignmentId = parseInt(assignment._id as string, 10);
+                    if (!isNaN(assignmentId)) {
+                        return this.getAssignment(assignmentId).pipe(
+                            mergeMap(existingAssignment => {
+                                if (existingAssignment?.auteur?._id === currentUser._id) {
+                                    this.logService.log(assignment.nom, 'modifié');
+                                    return this.http.put<Assignment>(this.uri, assignment).pipe(
+                                        catchError(this.handleError<any>('updateAssignment'))
+                                    );
+                                } else {
+                                    return throwError('Unauthorized');
+                                }
+                            })
+                        );
+                    } else {
+                        return throwError('Invalid assignment ID');
+                    }
+                }
+            })
         );
     }
 
@@ -82,10 +113,28 @@ export class AssignmentsService {
         // on va supprimer l'assignment dans le tableau
         //let pos = this.assignments.indexOf(assignment);
         //this.assignments.splice(pos, 1);
-        this.logService.log(assignment.nom, "supprimé");
-        //return of("Assignment supprimé avec succès");
-        return this.http.delete(this.uri + "/" + assignment._id).pipe(
-            catchError(this.handleError<any>('deleteAssignment'))
+        const assignmentId = parseInt(assignment._id as string, 10);
+        if (isNaN(assignmentId)) {
+            return throwError('Invalid assignment ID');
+        }
+
+        return this.getAssignment(assignmentId).pipe(
+            catchError(this.handleError<any>('getAssignment')),
+            mergeMap(existingAssignment => {
+                const currentUser = this.authService.getCurrentUser();
+                return from(this.authService.isAdmin()).pipe(
+                    mergeMap(isAdmin => {
+                        if (isAdmin || existingAssignment?.auteur?._id === currentUser._id) {
+                            this.logService.log(assignment.nom, 'supprimé');
+                            return this.http.delete(`${this.uri}/${assignmentId}`).pipe(
+                                catchError(this.handleError<any>('deleteAssignment'))
+                            );
+                        } else {
+                            return throwError('Unauthorized');
+                        }
+                    })
+                );
+            })
         );
     }
 
