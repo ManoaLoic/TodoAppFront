@@ -65,3 +65,14 @@ body {
     color: var(--third-color);
     border-color: var(--third-color) !important;
 }
+
+.button-brand {
+    --mdc-filled-button-container-color: var(--third-color) ;
+    color: black ;
+    border: 1px solid var(--third-color) ;
+}
+
+/* .cdk-virtual-scroll-viewport, .cdk-virtual-scroll-content-wrapper{
+    contain: none!important;
+    overflow-x: visible!important;
+} */

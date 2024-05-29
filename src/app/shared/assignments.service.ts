@@ -27,12 +27,18 @@ export class AssignmentsService {
         return this.http.get<Assignment[]>(this.uri);
     }
 
-    getAssignmentsPagines(page: number, limit: number): Observable<any> {
-        return this.http.get<Assignment[]>(this.uri + "?page=" + page + "&limit=" + limit);
+    //retourne tous les devoirs a faire
+    getAssignmentsToDo(page: number, limit: number): Observable<any> {
+        return this.http.get<any>(this.uri + "?rendu=false&page=" + page + "&limit=" + limit);
+    }
+
+
+    getAssignmentsPagines(page: number, limit: number, rendu: boolean): Observable<any> {
+        return this.http.get<Assignment[]>(`${this.uri}?page=${page}&limit=${limit}&rendu=${rendu}`);
     }
 
     // renvoie un assignment par son id, renvoie undefined si pas trouvé
-    getAssignment(id: number): Observable<Assignment | undefined> {
+    getAssignment(id: string): Observable<Assignment | undefined> {
         return this.http.get<Assignment>(this.uri + "/" + id)
             .pipe(
                 catchError(this.handleError<any>('### catchError: getAssignments by id avec id=' + id))
@@ -117,7 +123,7 @@ export class AssignmentsService {
             nouvelAssignment.rendu = a.rendu;
             nouvelAssignment.note = a.note || undefined;
             nouvelAssignment.remarque = a.remarque || '';
-            if(users[a.auteurId]){
+            if (users[a.auteurId]) {
                 const user = users[a.auteurId];
                 const auteur = new Auteur();
                 auteur._id = user._id;
@@ -126,7 +132,7 @@ export class AssignmentsService {
 
                 nouvelAssignment.auteur = auteur;
             }
-            if(matieres[a.matiereId]){
+            if (matieres[a.matiereId]) {
                 const matiereInput = matieres[a.matiereId];
                 const matiere = new Matiere();
                 matiere._id = matiereInput._id;

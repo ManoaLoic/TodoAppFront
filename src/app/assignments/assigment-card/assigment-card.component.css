@@ -37,8 +37,7 @@
     margin: 0;
 }
 
-.box-matiere {
-}
+.box-matiere {}
 
 .box-content-item {
     min-height: 28px;
@@ -47,4 +46,51 @@
 .card-footer {
     text-align: right;
     width: 100%;
+}
+
+.mat-flat-button {
+    background-color: var(--third-color);
+    color: black;
+    border: 1px solid var(--third-color);
+}
+
+.card-toDo,
+.card-done {
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+    border-top: 7px;
+    border-style: solid;
+}
+
+.card-done {
+    border-color: var(--fourth-color);
+}
+
+.card-toDo {
+    border-color: var(--first-color);
+}
+
+.preview,
+.cdk-drag-preview {
+    z-index: 99999999999999999999999;
+    color: black;
+    background: var(--fourth-color);
+    padding: 1rem;
+}
+
+.cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+        0 8px 10px 1px rgba(0, 0, 0, 0.14),
+        0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.placeholder {
+    width: 370px;
+    background: #ccc;
+    border: dotted 3px #999;
+    height: 200px;
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }

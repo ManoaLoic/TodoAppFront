@@ -1,4 +1,8 @@
-<mat-card class="item">
+<mat-card class="item {{assignment.rendu ? 'card-done' : 'card-toDo'}}" cdkDrag>
+    <div *cdkDragPreview class="preview">
+        {{assignment.nom}}
+    </div>
+    <div class="placeholder" *cdkDragPlaceholder></div>
     <mat-card-header>
         <div class="header-box">
             <div class="left">
@@ -43,7 +47,7 @@
     </mat-card-content>
     <mat-card-actions>
         <div class="card-footer">
-            <a mat-stroked-button routerLink="/assignment/{{ assignment._id }}">Voir détail</a>
+            <a class="mat-flat-button" mat-stroked-button routerLink="/assignment/{{ assignment._id }}">Voir détail</a>
         </div>
     </mat-card-actions>
 </mat-card>

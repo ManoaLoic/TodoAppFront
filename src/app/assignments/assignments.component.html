@@ -1,16 +1,18 @@
 <div class="container">
     <div class="btnAjout">
         <a routerLink="/add">
-            <button mat-flat-button color="accent">Ajouter Assignment</button>
+            <button mat-flat-button class="mat-flat-button">Nouveau devoir</button>
         </a>
     </div>
 
-    <h2>{{ titre }}</h2>
+    <h2 cdkDrag (cdkDragStarted)="onDragStarted($event)" (cdkDragEnded)="onDragEnded($event)">{{ titre }}</h2>
 
     <cdk-virtual-scroll-viewport itemSize="50" class="scroll-box" #scroller>
-        <div class="assignment-list">
+        <div cdkDropList class="assignment-list" (cdkDropListDropped)="drop($event)">
             <div *cdkVirtualFor="let a of assignments">
-                <app-assigment-card [assignment]="a"></app-assigment-card>
+                <div class="example-box">
+                    <app-assigment-card [assignment]="a"></app-assigment-card>
+                </div>
             </div>
         </div>
     </cdk-virtual-scroll-viewport>

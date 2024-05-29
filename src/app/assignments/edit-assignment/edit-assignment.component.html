@@ -1,20 +1,55 @@
 @if(assignment) {
 <div class="container">
-  <h1>Edition de l'assignment {{assignment.nom}}</h1>
-  <form ngForm class="form" #formupdate (submit)="onSaveAssignment(); formupdate.reset(); ">
-    <mat-form-field>
-      <input matInput placeholder="Edition du nom" [(ngModel)]="nomAssignment" name="assignment-name">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput [matDatepicker]="picker" placeholder="Edition de la date" [(ngModel)]="dateDeRendu" name="date">
-      <mat-datepicker-toggle matSuffix [for]="picker">
-      </mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-    <button mat-raised-button color="primary" [disabled]="((!nomAssignment)||(!dateDeRendu))">
-      Sauver
-    </button>
-  </form>
- </div>
-}
+    <h1>Edition de l'assignment {{assignment.nom}}</h1>
+    <form ngForm class="form" #formupdate (submit)="onSaveAssignment(); formupdate.reset(); ">
+        <mat-stepper class="stepper" orientation="vertical" [linear]="false" #stepper>
+            <mat-step [stepControl]="step1FormGroup">
+                <form [formGroup]="step1FormGroup" class="form-step">
+                    <ng-template matStepLabel>Modifier le devoir</ng-template>
 
+                    <mat-form-field>
+                        <mat-label>Nom</mat-label>
+                        <input [(ngModel)]="nomAssignment" matInput placeholder="Edition du nom" formControlName="nomAssignment">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Date de Rendu</mat-label>
+                        <input [(ngModel)]="dateDeRendu" matInput [matDatepicker]="picker" placeholder="Edition de la date"
+                            formControlName="dateDeRendu">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+
+                    <!-- <div>
+                        <button mat-button class="button-brand" matStepperNext [disabled]="step1FormGroup.invalid">Next</button>
+                    </div> -->
+                </form>
+            </mat-step>
+
+            <mat-step [stepControl]="step2FormGroup">
+                <form [formGroup]="step2FormGroup" class="form-step">
+                    <ng-template matStepLabel>Marquer comme rendu</ng-template>
+
+                    <mat-form-field>
+                        <mat-label>Note</mat-label>
+                        <input matInput type="number" min="0" max="20" placeholder="Note obtenue"
+                            formControlName="note" [(ngModel)]="note">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Remarque</mat-label>
+                        <textarea matInput [(ngModel)]="remarque" placeholder="Remarque" formControlName="remarque"></textarea>
+                    </mat-form-field>
+
+                </form>
+            </mat-step>
+            <div>
+                <button (click)="onSaveAssignment()" mat-button class="button-brand" matStepperNext [disabled]="step1FormGroup.invalid || step2FormGroup.invalid">Enregistrer</button>
+            </div>
+        </mat-stepper>
+        <div>
+            <button (click)="onSaveAssignment()" [disabled]="step1FormGroup.invalid || step2FormGroup.invalid" mat-flat-button class="button-brand">Enregistrer</button>
+        </div>
+    </form>
+</div>
+}
