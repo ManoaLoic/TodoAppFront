@@ -25,11 +25,10 @@
             <div class="profile-item">
                 <mat-icon class="m-small-right">email</mat-icon>{{userConnected.email}}
             </div>
-            @if(userConnected.isAdmin){
-            <div class="profile-item">
+            <div class="profile-item" *ngIf="userConnected.isAdmin">
                 <mat-icon class="m-small-right">accessibility_new</mat-icon>ADMINISTRATEUR
             </div>
-            }
+            
             <div class="logOut-box">
                 <button mat-button (click)="logout()">
                     <div class="center">

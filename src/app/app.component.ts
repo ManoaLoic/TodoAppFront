@@ -21,7 +21,7 @@ import { FormsModule } from '@angular/forms';
 import { FULL_PAGE } from './shared/constants';
 import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { Assignment } from './assignments/assignment.model';
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
 @Component({
     selector: 'app-root',
@@ -33,11 +33,11 @@ import { Component } from '@angular/core';
     templateUrl: './app.component.html',
     styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
     title = 'Assignments Application';
     opened: boolean = true;
     profileOpened: boolean = false;
-    userConnected: User;
+    userConnected: User = new User();
     isFullPage: boolean = false;
     targetList: string = '/done';
 
@@ -45,18 +45,13 @@ export class AppComponent {
         private assignmentsService: AssignmentsService,
         private matieresService: MatieresService,
         private usersService: UsersService,
-        private router: Router) {
-        this.userConnected = new User();
-        this.userConnected.nom = 'Lezley Lambrook';
-        this.userConnected.email = 'llambrook1@blogger.com';
-        this.userConnected.isAdmin = true;
+        private router: Router)
+     {
     }
 
 
     isLogged() {
-        if (this.authService.loggedIn) {
-        }
-        return this.authService.loggedIn;
+        return this.authService.isLoggedIn();
     }
 
     ngOnInit() {
@@ -65,7 +60,18 @@ export class AppComponent {
                 this.isFullPage = FULL_PAGE.includes(event.url);
             }
         });
+
+        this.authService.currentUser$.subscribe(user => {
+            if (user) {
+                this.userConnected.nom = user.nom;
+                this.userConnected.email = user.email;
+                this.userConnected.isAdmin = user.isAdmin;
+            } else {
+                this.userConnected = new User(); 
+            }
+        });
     }
+
     onAssignmentDropped(event: CdkDragDrop<Assignment[]>) {
         alert('Tay be');
         if (event.previousContainer === event.container) {
