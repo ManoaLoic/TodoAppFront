@@ -75,6 +75,7 @@ export class AssignmentsService {
         );
     }
 
+    //aide par chatgpt
     updateAssignment(assignment: Assignment): Observable<any> {
         // l'assignment passé en paramètre est le même objet que dans le tableau
         // plus tard on verra comment faire avec une base de données

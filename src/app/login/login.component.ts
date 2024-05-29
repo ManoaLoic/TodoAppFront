@@ -17,8 +17,8 @@ import { ME_KEY, TOKEN_KEY } from '../shared/constants';
   imports: [FormsModule, MatInputModule, MatButtonModule, CommonModule]
 })
 export class LoginComponent {
-  login: string = '';
-  password: string = '';
+  login: string = 'llambrook1@blogger.com';
+  password: string = 'llambrook1@blogger.com';
   errorMessage: string = '';
 
   constructor(private authService: AuthService, private router: Router) { }
