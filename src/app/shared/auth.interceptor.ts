@@ -10,6 +10,8 @@ export class AuthInterceptor implements HttpInterceptor{
 
     constructor(private router: Router, private authService: AuthService) {}
 
+    //code inspirer de https://lironhazan.medium.com/angular-6-401-authentication-error-handling-888922def566
+
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const authToken = this.authService.getAuthToken();
     

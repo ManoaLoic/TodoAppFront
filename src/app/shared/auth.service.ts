@@ -68,6 +68,8 @@ export class AuthService {
     });
   }
 
+  //code jwt_decode inspirer par des codes de stackOverFlow
+
   isTokenExpired(token: string): boolean {
     const decoded: any = jwt_decode.jwtDecode(token);
     if (decoded.exp === undefined) {
