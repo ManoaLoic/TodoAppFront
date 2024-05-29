@@ -1,4 +1,4 @@
-<mat-card class="item {{assignment.rendu ? 'card-done' : 'card-toDo'}}" cdkDrag>
+<mat-card class="item {{assignment.rendu ? 'card-done' : 'card-toDo'}}" cdkDrag [cdkDragData]="assignment">
     <div *cdkDragPreview class="preview">
         {{assignment.nom}}
     </div>

@@ -22,6 +22,8 @@ import { FULL_PAGE } from './shared/constants';
 import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { Assignment } from './assignments/assignment.model';
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { AssignmentMarkNoteComponent } from './assignments/assignment-mark-note/assignment-mark-note.component';
 
 @Component({
     selector: 'app-root',
@@ -45,13 +47,13 @@ export class AppComponent {
         private assignmentsService: AssignmentsService,
         private matieresService: MatieresService,
         private usersService: UsersService,
-        private router: Router) {
+        private router: Router,
+        private dialog: MatDialog) {
         this.userConnected = new User();
         this.userConnected.nom = 'Lezley Lambrook';
         this.userConnected.email = 'llambrook1@blogger.com';
         this.userConnected.isAdmin = true;
     }
-
 
     isLogged() {
         if (this.authService.loggedIn) {
@@ -66,20 +68,22 @@ export class AppComponent {
             }
         });
     }
-    onAssignmentDropped(event: CdkDragDrop<Assignment[]>) {
-        alert('Tay be');
-        if (event.previousContainer === event.container) {
-            //   moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-        } else {
-            // Update data source and target list based on drop location
-            //   transferArrayItem(
-            //     event.previousContainer.data,
-            //     event.container.data,
-            //     event.previousIndex,
-            //     event.currentIndex
-            //   );
-            this.targetList = '/done'; // Update target list to "Déja fait" after dropping
-        }
+
+    openModal() {
+        const dialogRef = this.dialog.open(AssignmentMarkNoteComponent, {
+            width: '400px', // Adjust width as needed
+            data: {} // You can pass data to the modal if needed
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed');
+            // Do something with the result if needed
+        });
+    }
+
+    drop(event: CdkDragDrop<string[]>) {
+        console.log('Data', event.item.data);
+        this.openModal();
     }
 
     toggleNavBar() {

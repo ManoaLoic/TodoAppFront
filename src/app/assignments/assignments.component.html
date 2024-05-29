@@ -7,6 +7,21 @@
 
     <h2>{{ titre }}</h2>
 
+    <div class="search-box">
+        <div class="total">
+            {{totalDocs}} éléments trouvés
+        </div>
+
+        <form class="">
+            <mat-form-field class="search-input">
+                <input name="search" matInput placeholder="Rechercher" [(ngModel)]="searchKey">
+            </mat-form-field>
+
+            <button (click)="onSearch()" mat-stroked-button>Rechercher</button>
+
+        </form>
+    </div>
+
     <cdk-virtual-scroll-viewport itemSize="50" class="scroll-box" #scroller>
         <div cdkDropList class="assignment-list" (cdkDropListDropped)="drop($event)">
             <div *cdkVirtualFor="let a of assignments">
