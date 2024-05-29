@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>Add Note and Remark</h1>
+<div mat-dialog-content>
+  <form #form="ngForm">
+    <mat-form-field>
+      <textarea matInput placeholder="Note" name="note" ngModel></textarea>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <textarea matInput placeholder="Remark" name="remark" ngModel></textarea>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancelClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="form.value" cdkFocusInitial>Save</button>
+</div>

@@ -19,6 +19,8 @@ import { filter, map, pairwise, tap, throttleTime } from 'rxjs/operators';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { CdkDragDrop, CdkDragStart, DragDropModule } from '@angular/cdk/drag-drop';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
     selector: 'app-assignments',
@@ -44,6 +46,8 @@ import { CdkDragDrop, CdkDragStart, DragDropModule } from '@angular/cdk/drag-dro
         MatIconModule,
         AssigmentCardComponent,
         DragDropModule,
+        MatFormFieldModule,
+        MatInputModule,
     ],
 })
 export class AssignmentsComponent implements OnInit {
@@ -56,6 +60,8 @@ export class AssignmentsComponent implements OnInit {
     prevPage!: number;
     hasNextPage!: boolean;
     hasPrevPage!: boolean;
+
+    searchKey?: string;
 
     // tableau des assignments POUR AFFICHAGE
     displayedColumns: string[] = ['nom', 'dateDeRendu', 'rendu'];
@@ -72,7 +78,13 @@ export class AssignmentsComponent implements OnInit {
     constructor(private assignmentsService: AssignmentsService,
         private ngZone: NgZone) { }
 
-    drop(event: CdkDragDrop<string[]>) {}
+    onSearch(){
+        this.page = 1;
+        this.getAssignmentsFromService();
+    }
+
+    drop(event: CdkDragDrop<string[]>) {
+    }
 
     getColor(a: any) {
         return a.rendu ? 'green' : 'red';
@@ -128,7 +140,7 @@ export class AssignmentsComponent implements OnInit {
     getAssignmentsFromService() {
         // on récupère les assignments depuis le service
         this.assignmentsService
-            .getAssignmentsPagines(this.page, this.limit, this.rendu)
+            .getAssignmentsPagines(this.page, this.limit, this.rendu, this.searchKey)
             .subscribe((data) => {
                 // les données arrivent ici au bout d'un certain temps
                 console.log('Données arrivées');
@@ -146,7 +158,7 @@ export class AssignmentsComponent implements OnInit {
     getAssignmentsFromServicePourScrollInfini() {
         // on récupère les assignments depuis le service
         this.assignmentsService
-            .getAssignmentsPagines(this.page, this.limit, this.rendu)
+            .getAssignmentsPagines(this.page, this.limit, this.rendu, this.searchKey)
             .subscribe((data) => {
                 // les données arrivent ici au bout d'un certain temps
                 console.log('Données arrivées');

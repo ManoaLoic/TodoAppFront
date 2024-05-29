@@ -80,3 +80,18 @@ td {
     background-color: #555;
     /* Set the color of the scrollbar thumb on hover */
 }
+
+.search-box{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.total{
+    margin-right: 1rem;
+}
+
+.search-input{
+    height: 70px;
+    border-radius: 8px;
+}

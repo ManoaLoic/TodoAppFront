@@ -44,7 +44,7 @@
 </mat-toolbar>
 <mat-sidenav-container class="matNav-content">
     <mat-sidenav *ngIf="!isFullPage" #sidenav mode="side" [(opened)]="opened">
-        <mat-list role="list">
+        <mat-list role="list" cdkDropList (cdkDropListDropped)="drop($event)">
             <mat-list-item role="listitem">
                 <a mat-stroked-button color="primary" class="nav-link button-main" routerLink="/add">
                     <div class="center button-main">
@@ -71,9 +71,9 @@
                 </a>
             </mat-list-item>
 
-            <mat-list-item role="listitem">
+            <mat-list-item role="listitem" cdkDrag>
                 <a mat-button class="nav-link" routerLink="/done">
-                    <div cdkDropList (cdkDropListDropped)="onAssignmentDropped($event)" class="center">
+                    <div class="center">
                         <mat-icon class="m-small-right">done_outline</mat-icon>
                         Déja fait
                     </div>
@@ -81,6 +81,7 @@
             </mat-list-item>
 
         </mat-list>
+
     </mat-sidenav>
     <mat-sidenav-content class="">
         <!-- <button (click)="genererDonneesDeTest()">Data</button> -->

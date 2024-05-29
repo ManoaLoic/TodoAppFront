@@ -37,8 +37,8 @@ export class AssignmentsService {
     }
 
 
-    getAssignmentsPagines(page: number, limit: number, rendu: boolean): Observable<any> {
-        return this.http.get<Assignment[]>(`${this.uri}?page=${page}&limit=${limit}&rendu=${rendu}`).pipe(
+    getAssignmentsPagines(page: number, limit: number, rendu: boolean, q?: string): Observable<any> {
+        return this.http.get<Assignment[]>(`${this.uri}?page=${page}&limit=${limit}&rendu=${rendu}${q ? `&q=${q}` : ''}`).pipe(
             catchError(this.handleError<any>('getAssignmentsPagines', []))
         );
     }
