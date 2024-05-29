@@ -5,7 +5,7 @@
         </a>
     </div>
 
-    <h2 cdkDrag (cdkDragStarted)="onDragStarted($event)" (cdkDragEnded)="onDragEnded($event)">{{ titre }}</h2>
+    <h2>{{ titre }}</h2>
 
     <cdk-virtual-scroll-viewport itemSize="50" class="scroll-box" #scroller>
         <div cdkDropList class="assignment-list" (cdkDropListDropped)="drop($event)">

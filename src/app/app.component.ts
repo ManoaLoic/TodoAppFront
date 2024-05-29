@@ -1,4 +1,4 @@
-import { Router, RouterLinkActive, RouterOutlet, RouterOutlet,NavigationEnd } from '@angular/router';
+import { Router, RouterLinkActive, RouterOutlet, NavigationEnd } from '@angular/router';
 
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,6 +21,7 @@ import { FormsModule } from '@angular/forms';
 import { FULL_PAGE } from './shared/constants';
 import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { Assignment } from './assignments/assignment.model';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'app-root',
@@ -45,41 +46,41 @@ export class AppComponent {
         private matieresService: MatieresService,
         private usersService: UsersService,
         private router: Router) {
-            this.userConnected = new User();
-            this.userConnected.nom = 'Lezley Lambrook';
-            this.userConnected.email = 'llambrook1@blogger.com';
-            this.userConnected.isAdmin = true;
+        this.userConnected = new User();
+        this.userConnected.nom = 'Lezley Lambrook';
+        this.userConnected.email = 'llambrook1@blogger.com';
+        this.userConnected.isAdmin = true;
     }
 
 
     isLogged() {
-        if(this.authService.loggedIn) {
+        if (this.authService.loggedIn) {
         }
         return this.authService.loggedIn;
-      }
-    
-      ngOnInit() {
-        this.router.events.subscribe(event => {
-          if (event instanceof NavigationEnd) {
-            this.isFullPage = FULL_PAGE.includes(event.url);
-          }
-        });
+    }
 
+    ngOnInit() {
+        this.router.events.subscribe(event => {
+            if (event instanceof NavigationEnd) {
+                this.isFullPage = FULL_PAGE.includes(event.url);
+            }
+        });
+    }
     onAssignmentDropped(event: CdkDragDrop<Assignment[]>) {
         alert('Tay be');
         if (event.previousContainer === event.container) {
-        //   moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+            //   moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
         } else {
-          // Update data source and target list based on drop location
-        //   transferArrayItem(
-        //     event.previousContainer.data,
-        //     event.container.data,
-        //     event.previousIndex,
-        //     event.currentIndex
-        //   );
-          this.targetList = '/done'; // Update target list to "Déja fait" after dropping
+            // Update data source and target list based on drop location
+            //   transferArrayItem(
+            //     event.previousContainer.data,
+            //     event.container.data,
+            //     event.previousIndex,
+            //     event.currentIndex
+            //   );
+            this.targetList = '/done'; // Update target list to "Déja fait" after dropping
         }
-      }
+    }
 
     toggleNavBar() {
         this.opened = !this.opened;
