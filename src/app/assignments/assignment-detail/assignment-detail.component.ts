@@ -21,6 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class AssignmentDetailComponent implements OnInit {
   assignmentTransmis!: Assignment|undefined;
+  isAdmin: boolean = false;
 
   constructor(private assignmentsService:AssignmentsService,
               private authService:AuthService,
@@ -40,6 +41,15 @@ export class AssignmentDetailComponent implements OnInit {
     .subscribe(assignment => {
       this.assignmentTransmis = assignment;
     });
+
+    this.authService.isAdmin()
+      .then(admin => {
+        this.isAdmin = admin;
+      })
+      .catch(error => {
+        console.error('Erreur dans isAdmin:', error);
+      });
+
   }
 
   onAssignmentRendu() {
@@ -69,7 +79,4 @@ export class AssignmentDetailComponent implements OnInit {
     }
   }
 
-  isAdmin() {
-    return this.authService.loggedIn;
-  }
 }
