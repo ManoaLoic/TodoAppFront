@@ -42,6 +42,9 @@ export class AppComponent implements OnInit {
     userConnected: User = new User();
     isFullPage: boolean = false;
     targetList: string = '/done';
+    totalAssignmentsToDo: number = 0;
+    totalAssignmentsDone: number = 0;
+
 
     constructor(private authService: AuthService,
         private assignmentsService: AssignmentsService,
@@ -71,6 +74,14 @@ export class AppComponent implements OnInit {
             } else {
                 this.userConnected = new User();
             }
+        });
+
+        this.assignmentsService.getAssignmentsToDoCount().subscribe(count => {
+            this.totalAssignmentsToDo = count;
+        });
+
+        this.assignmentsService.getAssignmentsDoneCount().subscribe(count => {
+            this.totalAssignmentsDone = count;
         });
     }
 

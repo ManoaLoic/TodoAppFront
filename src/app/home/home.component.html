@@ -1,0 +1,16 @@
+<div class="home-container">
+    <div class="welcome-message">
+        <h1>Bonjour,  {{currentUser.nom}} </h1>
+        <p>Bienvenue sur votre tableau de bord. Voici un aperçu de vos devoirs :</p>
+    </div>
+    <div class="dashboard">
+        <div class="circle-card" [style.background-color]="'var(--first-color)'">
+            <h2>Devoirs à faire</h2>
+            <p>{{ assignmentsToDoCount }} ({{ assignmentsToDoPercentage | number:'1.0-0' }}%) </p>
+        </div>
+        <div class="circle-card" [style.background-color]="'var(--second-color)'">
+            <h2>Devoirs rendus</h2>
+            <p>{{ assignmentsDoneCount }} ({{ assignmentsDonePercentage | number:'1.0-0' }}%) </p>
+        </div>
+    </div>
+</div>

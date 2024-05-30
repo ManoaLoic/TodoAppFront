@@ -43,6 +43,19 @@ export class AssignmentsService {
         );
     }
 
+    getAssignmentsToDoCount(): Observable<number> {
+        return this.http.get<number>(`${this.uri}/count?rendu=false`).pipe(
+            catchError(this.handleError<number>('getAssignmentsToDoCount', 0))
+        );
+    }
+    
+    getAssignmentsDoneCount(): Observable<number> {
+        return this.http.get<number>(`${this.uri}/count?rendu=true`).pipe(
+            catchError(this.handleError<number>('getAssignmentsDoneCount', 0))
+        );
+    }
+    
+
     // renvoie un assignment par son id, renvoie undefined si pas trouvé
     getAssignment(id: string): Observable<Assignment | undefined> {
         return this.http.get<Assignment>(this.uri + "/" + id)

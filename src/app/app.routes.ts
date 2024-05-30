@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
 import { AssignmentsComponent } from './assignments/assignments.component';
 import { AddAssignmentComponent } from './assignments/add-assignment/add-assignment.component';
 import { AssignmentDetailComponent } from './assignments/assignment-detail/assignment-detail.component';
@@ -12,7 +13,7 @@ import { AssignmentDoneComponent } from './assignments/assignment-done/assignmen
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'home', component: AssignmentsComponent, canActivate: [authGuard]},
+  { path: 'home', component: HomeComponent, canActivate: [authGuard]},
   { path: "toDo", component: AssignmentToDoComponent, canActivate: [authGuard] },
   { path: "done", component: AssignmentDoneComponent, canActivate: [authGuard] },
   { path: "add", component: AddAssignmentComponent, canActivate: [authGuard] },
