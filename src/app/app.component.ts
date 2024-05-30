@@ -75,14 +75,6 @@ export class AppComponent implements OnInit {
                 this.userConnected = new User();
             }
         });
-
-        this.assignmentsService.getAssignmentsToDoCount().subscribe(count => {
-            this.totalAssignmentsToDo = count;
-        });
-
-        this.assignmentsService.getAssignmentsDoneCount().subscribe(count => {
-            this.totalAssignmentsDone = count;
-        });
     }
 
     openModal() {

@@ -42,15 +42,9 @@ export class AssignmentsService {
             catchError(this.handleError<any>('getAssignmentsPagines', []))
         );
     }
-
-    getAssignmentsToDoCount(): Observable<number> {
-        return this.http.get<number>(`${this.uri}/count?rendu=false`).pipe(
-            catchError(this.handleError<number>('getAssignmentsToDoCount', 0))
-        );
-    }
     
-    getAssignmentsDoneCount(): Observable<number> {
-        return this.http.get<number>(`${this.uri}/count?rendu=true`).pipe(
+    getAssignmentsCount(): Observable<any> {
+        return this.http.get<number>(`${this.uri}/count`).pipe(
             catchError(this.handleError<number>('getAssignmentsDoneCount', 0))
         );
     }

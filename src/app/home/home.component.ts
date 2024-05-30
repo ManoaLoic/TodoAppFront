@@ -30,20 +30,18 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser() as User;
 
-    this.assignmentsService.getAssignmentsToDo(1, 100).subscribe(data => {
-      this.assignmentsToDoCount = data.length;
+    this.assignmentsService.getAssignmentsCount().subscribe(data => {
+      data.result.forEach((item: {rendu: boolean, count: number}) => {
+          if(item.rendu){
+            this.assignmentsDoneCount = item.count;
+          }else{
+            this.assignmentsToDoCount = item.count;
+          }
+          this.totalAssignments += item.count;
+      });
       this.calculatePercentages();
     });
 
-    this.assignmentsService.getAssignmentsPagines(1, 100, true).subscribe(data => {
-      this.assignmentsDoneCount = data.length;
-      this.calculatePercentages();
-    });
-
-    this.assignmentsService.getAssignmentsToDoCount().subscribe((count: number) => {
-      this.totalAssignments = count;
-      this.calculatePercentages();
-    });    
   }
 
   calculatePercentages() {
