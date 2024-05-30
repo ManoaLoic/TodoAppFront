@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_ENDPOINT, ME_KEY, TOKEN_KEY } from './constants';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { User } from '../users/user.model';
 import { AuthResponse, AuthUser } from './authResponse.model';
 import * as jwt_decode from 'jwt-decode';
@@ -11,6 +11,8 @@ import * as jwt_decode from 'jwt-decode';
 })
 export class AuthService {
   loggedIn = false;
+  private currentUserSubject = new BehaviorSubject<AuthUser | null>(this.getCurrentUser());
+  public currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -39,15 +41,13 @@ export class AuthService {
   logIn(token: string, user: AuthUser) {
     sessionStorage.setItem(TOKEN_KEY, token);
     sessionStorage.setItem(ME_KEY, JSON.stringify(user));
-    this.loggedIn = true;
-  }
+    this.currentUserSubject.next(user);  }
 
   logOut() {
     console.log("Déconnexion de l'utilisateur");
     sessionStorage.removeItem(TOKEN_KEY);
     sessionStorage.removeItem(ME_KEY);
-    this.loggedIn = false;
-  }
+    this.currentUserSubject.next(null);  }
 
   // isAdmin() {
   //   const promesse = new Promise((resolve, reject) => {
