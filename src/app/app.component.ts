@@ -21,9 +21,9 @@ import { FormsModule } from '@angular/forms';
 import { FULL_PAGE } from './shared/constants';
 import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { Assignment } from './assignments/assignment.model';
-import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AssignmentMarkNoteComponent } from './assignments/assignment-mark-note/assignment-mark-note.component';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
 @Component({
     selector: 'app-root',
@@ -35,11 +35,11 @@ import { AssignmentMarkNoteComponent } from './assignments/assignment-mark-note/
     templateUrl: './app.component.html',
     styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
     title = 'Assignments Application';
     opened: boolean = true;
     profileOpened: boolean = false;
-    userConnected: User;
+    userConnected: User = new User();
     isFullPage: boolean = false;
     targetList: string = '/done';
 
@@ -49,22 +49,27 @@ export class AppComponent {
         private usersService: UsersService,
         private router: Router,
         private dialog: MatDialog) {
-        this.userConnected = new User();
-        this.userConnected.nom = 'Lezley Lambrook';
-        this.userConnected.email = 'llambrook1@blogger.com';
-        this.userConnected.isAdmin = true;
+
     }
 
     isLogged() {
-        if (this.authService.loggedIn) {
-        }
-        return this.authService.loggedIn;
+        return this.authService.isLoggedIn();
     }
 
     ngOnInit() {
         this.router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
                 this.isFullPage = FULL_PAGE.includes(event.url);
+            }
+        });
+
+        this.authService.currentUser$.subscribe(user => {
+            if (user) {
+                this.userConnected.nom = user.nom;
+                this.userConnected.email = user.email;
+                this.userConnected.isAdmin = user.isAdmin;
+            } else {
+                this.userConnected = new User();
             }
         });
     }
@@ -104,6 +109,11 @@ export class AppComponent {
             // on navigue vers la page d'accueil
             this.router.navigate(['/home']);
         }
+    }
+
+    logout() {
+        this.authService.logOut();
+        this.router.navigate(['/login']);
     }
 
     async genererDonneesDeTest() {
