@@ -18,5 +18,5 @@ export const routes: Routes = [
   { path: "done", component: AssignmentDoneComponent, canActivate: [authGuard] },
   { path: "add", component: AddAssignmentComponent, canActivate: [authGuard] },
   { path: "assignment/:id", component: AssignmentDetailComponent, canActivate: [authGuard] },
-  { path: "assignment/:id/edit", component: EditAssignmentComponent, canActivate: [authGuard] },
+  { path: "assignment/:id/edit", component: EditAssignmentComponent, canActivate: [adminGuard] },
 ];

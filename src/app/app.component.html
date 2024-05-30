@@ -1,4 +1,4 @@
-<mat-toolbar *ngIf="!isFullPage">
+<mat-toolbar class="toolbar" *ngIf="!isFullPage">
     <div class="container-nav">
         <div class="left">
             <button (click)="toggleNavBar()" mat-icon-button class="example-icon"
@@ -28,7 +28,7 @@
             <div class="profile-item" *ngIf="userConnected.isAdmin">
                 <mat-icon class="m-small-right">accessibility_new</mat-icon>ADMINISTRATEUR
             </div>
-            
+
             <div class="logOut-box">
                 <button mat-button (click)="logout()">
                     <div class="center">
