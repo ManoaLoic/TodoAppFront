@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../shared/auth.service';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -14,7 +14,7 @@ import { ME_KEY, TOKEN_KEY } from '../shared/constants';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   standalone: true,
-  imports: [FormsModule, MatInputModule, MatButtonModule, CommonModule]
+  imports: [FormsModule, MatInputModule, MatButtonModule, CommonModule, RouterLink]
 })
 export class LoginComponent {
   login: string = 'llambrook1@blogger.com';

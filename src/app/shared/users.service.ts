@@ -38,6 +38,11 @@ export class UsersService {
         }
     };
 
+    register(user: User): Observable<any> {
+        this.logService.log(user.nom, "ajouté");
+        return this.http.post<User>(`${API_ENDPOINT}/register`, user);
+    }
+
     addUser(user: User): Observable<any> {
         this.logService.log(user.nom, "ajouté");
         return this.http.post<User>(this.uri, user);

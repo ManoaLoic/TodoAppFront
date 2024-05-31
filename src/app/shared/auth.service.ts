@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_ENDPOINT, ME_KEY, TOKEN_KEY } from './constants';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { User } from '../users/user.model';
 import { AuthResponse, AuthUser } from './authResponse.model';
 import * as jwt_decode from 'jwt-decode';
@@ -20,7 +21,7 @@ export class AuthService {
 
   doAuth(email: string, password: string): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(this.uri, { email, password });
-  }
+  }  
 
   getAuthToken(): string | null {
     return sessionStorage.getItem(TOKEN_KEY);
@@ -48,6 +49,7 @@ export class AuthService {
     sessionStorage.removeItem(TOKEN_KEY);
     sessionStorage.removeItem(ME_KEY);
     this.currentUserSubject.next(null);  }
+    
 
   // isAdmin() {
   //   const promesse = new Promise((resolve, reject) => {
@@ -79,4 +81,6 @@ export class AuthService {
     date.setUTCSeconds(decoded.exp);
     return date.valueOf() < new Date().valueOf();
   }
+
+
 }

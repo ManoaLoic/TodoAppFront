@@ -6,6 +6,7 @@ import { AddAssignmentComponent } from './assignments/add-assignment/add-assignm
 import { AssignmentDetailComponent } from './assignments/assignment-detail/assignment-detail.component';
 import { EditAssignmentComponent } from './assignments/edit-assignment/edit-assignment.component';
 import { AssignmentToDoComponent } from './assignments/assignment-to-do/assignment-to-do.component';
+import { RegisterComponent } from './register/register.component';
 import { authGuard } from './shared/auth.guard';
 import { adminGuard } from './shared/admin.guard';
 import { AssignmentDoneComponent } from './assignments/assignment-done/assignment-done.component';
@@ -15,6 +16,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent, canActivate: [authGuard]},
   { path: "toDo", component: AssignmentToDoComponent, canActivate: [authGuard] },
+  { path: 'register', component: RegisterComponent },
   { path: "done", component: AssignmentDoneComponent, canActivate: [authGuard] },
   { path: "add", component: AddAssignmentComponent, canActivate: [authGuard] },
   { path: "assignment/:id", component: AssignmentDetailComponent, canActivate: [authGuard] },
