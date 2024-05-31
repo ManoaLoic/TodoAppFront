@@ -1,3 +1,11 @@
+# Liens
+
+## Backend
+- [https://todoappback-3bnj.onrender.com](https://todoappback-3bnj.onrender.com)
+
+## Frontend
+- [https://todoappfront-zvgv.onrender.com](https://todoappfront-zvgv.onrender.com)
+
 # Lancer le projet en Local
 
 ## Backend ExpressJS
@@ -47,6 +55,7 @@ ng serve
 **Liste des assignments**
 - Utilisation `MaterialCard` pour la liste des assignments dans le scroll infini
 - Création de 2 tabs pour les assignments rendu et non rendu
+- Recherche par le nom
 
 **Gestion assignments**
 - Création Ajout de assignment
@@ -62,6 +71,7 @@ ng serve
 
 **Gestion d'accès frontEnd**
 - Création page Login
+- Inscription
 - Implémentation des gardiens
 - Se déconnecter
 - Gestion des roles: Seuls les admins peuvent modifier et supprimer les assignments
